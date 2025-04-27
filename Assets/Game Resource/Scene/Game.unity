@@ -5194,6 +5194,12 @@ PrefabInstance:
       objectReference: {fileID: 196225868}
     - target: {fileID: 6786693879229718651, guid: 4dd152c7f68e33348a77a097d60d0477,
         type: 3}
+      propertyPath: onImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e9b553be74ee8947a8cc3a54375039b,
+        type: 3}
+    - target: {fileID: 6786693879229718651, guid: 4dd152c7f68e33348a77a097d60d0477,
+        type: 3}
       propertyPath: soundOn
       value: 
       objectReference: {fileID: 1240522322}
