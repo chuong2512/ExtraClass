@@ -220,7 +220,7 @@ public class TransporterController : MonoBehaviour
                 anim.ChangeAnim(1);
                 break;
             case 3:
-                Rotate();
+                Rotate(true);
                 anim.ChangeAnim(2);
                 break;
         }

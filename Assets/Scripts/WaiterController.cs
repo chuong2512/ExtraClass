@@ -342,7 +342,7 @@ public class WaiterController : MonoBehaviour
                 anim.ChangeAnim(1);
                 break;
             case 3:
-                Rotate();
+                Rotate(false);
                 anim.ChangeAnim(2);
                 break;
         }
