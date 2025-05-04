@@ -13,9 +13,9 @@ public class FreeCoinData
 
 	public FreeCoinData()
 	{
-		this.free = true;
-		this.watchAds = 0;
-		this.lastTimeWatchAd = DateTime.Now.ToString();
-		this.lastTimeGetFree = DateTime.Now.ToString();
+		this.free           =true;
+		this.watchAds       =0;
+		this.lastTimeWatchAd=DateTime.Now.ToString();
+		this.lastTimeGetFree=DateTime.Now.ToString();
 	}
 }

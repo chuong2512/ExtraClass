@@ -6,7 +6,7 @@ using UnityEngine.Purchasing;
 using UnityEngine.Purchasing.Extension;
 using UnityEngine.Purchasing.Security;
 
-public class InAppPurchase : MonoBehaviour, IStoreListener
+public class InAppPurchase : MonoBehaviour,IStoreListener
 {
 	[Serializable]
 	public class Products
@@ -36,11 +36,11 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 
 	private void Awake()
 	{
-		if (InAppPurchase.instance == null)
+		if(InAppPurchase.instance==null)
 		{
-			InAppPurchase.instance = this;
+			InAppPurchase.instance=this;
 		}
-		else if (InAppPurchase.instance != this)
+		else if(InAppPurchase.instance!=this)
 		{
 			UnityEngine.Object.Destroy(base.gameObject);
 		}
@@ -49,7 +49,7 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 
 	private void Start()
 	{
-		if (InAppPurchase.storeController == null)
+		if(InAppPurchase.storeController==null)
 		{
 			this.InitializePurchasing();
 		}
@@ -57,14 +57,17 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 
 	private void InitializePurchasing()
 	{
-		if (this.IsInitialized())
+		if(this.IsInitialized())
 		{
 			return;
 		}
-		ConfigurationBuilder configurationBuilder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance(), new IPurchasingModule[0]);
-		for (int i = 0; i < this.products.Count; i++)
+		ConfigurationBuilder configurationBuilder=ConfigurationBuilder.Instance(StandardPurchasingModule.Instance(),new IPurchasingModule[0]);
+		for(int i=0;i<this.products.Count;i++)
 		{
-			configurationBuilder.AddProduct(this.products[i].name, this.products[i].productType, new IDs
+			configurationBuilder.AddProduct(
+			this.products[i].name,
+			this.products[i].productType,
+			new IDs
 			{
 				{
 					this.products[i].googlePlayID,
@@ -82,64 +85,67 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 				}
 			});
 		}
-		UnityPurchasing.Initialize(this, configurationBuilder);
-		base.Invoke("LoadLocalizePrice", 2f);
+		UnityPurchasing.Initialize(this,configurationBuilder);
+		base.Invoke("LoadLocalizePrice",2f);
 	}
 
 	public string GetLocalizePrice(int index)
 	{
-		return (!this.IsInitialized()) ? this.products[index].price : InAppPurchase.storeController.products.WithID(this.products[index].googlePlayID).metadata.localizedPriceString;
+		return (!this.IsInitialized())
+			? this.products[index].price
+			: InAppPurchase.storeController.products.WithID(this.products[index].googlePlayID).metadata.localizedPriceString;
 	}
 
 	private void LoadLocalizePrice()
 	{
-		Product[] all = InAppPurchase.storeController.products.all;
-		if (all.Length == 0)
+		Product[] all=InAppPurchase.storeController.products.all;
+		if(all.Length==0)
 		{
 			return;
 		}
-		for (int i = 0; i < this.products.Count; i++)
+		for(int i=0;i<this.products.Count;i++)
 		{
-			this.products[i].price = all[i].metadata.localizedPriceString;
+			this.products[i].price=all[i].metadata.localizedPriceString;
 		}
 	}
 
-	public void BuyProductID(string productID, Action buyDone)
+	public void BuyProductID(string productID,Action buyDone)
 	{
-		if (!this.IsInitialized())
+		if(!this.IsInitialized())
 		{
 			return;
 		}
-		this.purchased = buyDone;
-		Product product = InAppPurchase.storeController.products.WithID(productID);
-		if (product != null && product.availableToPurchase)
+		this.purchased=buyDone;
+		Product product=InAppPurchase.storeController.products.WithID(productID);
+		if(product!=null && product.availableToPurchase)
 		{
 			InAppPurchase.storeController.InitiatePurchase(product);
 		}
 	}
 
-	public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
+	public void OnInitialized(IStoreController controller,IExtensionProvider extensions)
 	{
-		InAppPurchase.storeController = controller;
-		InAppPurchase.storeExtensionProvider = extensions;
+		InAppPurchase.storeController       =controller;
+		InAppPurchase.storeExtensionProvider=extensions;
 	}
 
 	public void RestorePurchases()
 	{
-		if (!this.IsInitialized())
+		if(!this.IsInitialized())
 		{
 			return;
 		}
-		if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer)
+		if(Application.platform==RuntimePlatform.IPhonePlayer || Application.platform==RuntimePlatform.OSXPlayer)
 		{
-			IAppleExtensions extension = InAppPurchase.storeExtensionProvider.GetExtension<IAppleExtensions>();
-			extension.RestoreTransactions(delegate(bool result)
+			IAppleExtensions extension=InAppPurchase.storeExtensionProvider.GetExtension<IAppleExtensions>();
+			extension.RestoreTransactions(
+			delegate(bool result)
 			{
-				if (result && Notification.instance != null)
+				if(result && Notification.instance!=null)
 				{
 					Notification.instance.Warning("Restore Completed.");
 				}
-				if (!result && Notification.instance != null)
+				if(!result && Notification.instance!=null)
 				{
 					Notification.instance.Warning("Restore Failed.");
 				}
@@ -147,10 +153,7 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 		}
 	}
 
-	public void OnInitializeFailed(InitializationFailureReason error, string message)
-	{
-		
-	}
+	public void OnInitializeFailed(InitializationFailureReason error,string message) { }
 
 	public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs args)
 	{
@@ -166,54 +169,47 @@ public class InAppPurchase : MonoBehaviour, IStoreListener
 		//}
 		//if (flag)
 		//{
-			for (int i = 0; i < this.products.Count; i++)
+		for(int i=0;i<this.products.Count;i++)
+		{
+			if(string.Equals(args.purchasedProduct.definition.id,this.products[i].name,StringComparison.Ordinal))
 			{
-				if (string.Equals(args.purchasedProduct.definition.id, this.products[i].name, StringComparison.Ordinal))
+				if(this.purchased!=null)
 				{
-					if (this.purchased != null)
+					this.purchased();
+				}
+				else if(this.products[i].productType==ProductType.NonConsumable)
+				{
+					string name=this.products[i].name;
+					if(name!=null)
 					{
-						this.purchased();
-					}
-					else if (this.products[i].productType == ProductType.NonConsumable)
-					{
-						string name = this.products[i].name;
-						if (name != null)
+						if(!(name=="offlinepack"))
 						{
-							if (!(name == "offlinepack"))
-							{
-								if (name == "onlinepack")
-								{
-									Singleton<DataManager>.Instance.database.nonConsume.Add(this.products[i].name);
-									if (BoostManager.instance != null)
-									{
-										BoostManager.instance.TotalEffectiveCompute();
-									}
-								}
-							}
-							else
+							if(name=="onlinepack")
 							{
 								Singleton<DataManager>.Instance.database.nonConsume.Add(this.products[i].name);
+								if(BoostManager.instance!=null)
+								{
+									BoostManager.instance.TotalEffectiveCompute();
+								}
 							}
 						}
+						else
+						{
+							Singleton<DataManager>.Instance.database.nonConsume.Add(this.products[i].name);
+						}
 					}
-					return PurchaseProcessingResult.Complete;
 				}
+				return PurchaseProcessingResult.Complete;
 			}
-			this.purchased = null;
+		}
+		this.purchased=null;
 		//}
 		return PurchaseProcessingResult.Complete;
 	}
 
-	public void OnInitializeFailed(InitializationFailureReason error)
-	{
-	}
+	public void OnInitializeFailed(InitializationFailureReason error) { }
 
-	public void OnPurchaseFailed(Product product, PurchaseFailureReason failureReason)
-	{
-	}
+	public void OnPurchaseFailed(Product product,PurchaseFailureReason failureReason) { }
 
-	private bool IsInitialized()
-	{
-		return InAppPurchase.storeController != null && InAppPurchase.storeExtensionProvider != null;
-	}
+	private bool IsInitialized() { return InAppPurchase.storeController!=null && InAppPurchase.storeExtensionProvider!=null; }
 }

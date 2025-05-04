@@ -8,8 +8,5 @@ public class BoostData
 
 	public List<Boost> boosts;
 
-	public BoostData()
-	{
-		this.boosts = new List<Boost>();
-	}
+	public BoostData() { this.boosts=new List<Boost>(); }
 }

@@ -24,14 +24,14 @@ public class Database
 
 	public Database(Configuration config)
 	{
-		this.item = new List<Item>();
-		this.nonConsume = new List<string>();
-		this.restaurant = new List<Restaurant>();
+		this.item      =new List<Item>();
+		this.nonConsume=new List<string>();
+		this.restaurant=new List<Restaurant>();
 		this.restaurant.Add(new Restaurant(config));
-		this.tutorialCompleted = new List<int>();
-		this.soundSetting = new SoundSetting();
-		this.freeCashData = new FreeCoinData();
-		this.cash = config.general.startCash;
-		this.diamond = config.general.startDiamond;
+		this.tutorialCompleted=new List<int>();
+		this.soundSetting     =new SoundSetting();
+		this.freeCashData     =new FreeCoinData();
+		this.cash             =config.general.startCash;
+		this.diamond          =config.general.startDiamond;
 	}
 }

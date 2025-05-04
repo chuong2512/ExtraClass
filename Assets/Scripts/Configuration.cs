@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Configuration")]
+[CreateAssetMenu(fileName="Configuration")]
 public class Configuration : ScriptableObject
 {
 	[Serializable]

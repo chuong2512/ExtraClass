@@ -5,14 +5,8 @@ using UnityEngine.UI;
 
 public class BuyCoinButton : BaseIAPButton
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    protected override void OnBuySuccess()
-    {
-        
-    }
+	[SerializeField] private TextMeshProUGUI _text;
+	protected override       void            OnBuySuccess() { }
 
-    protected override void OnStart()
-    {
-       
-    }
+	protected override void OnStart() { }
 }

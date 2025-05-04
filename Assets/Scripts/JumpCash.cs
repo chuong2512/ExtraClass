@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class JumpCash : MonoBehaviour
 {
-	private sealed class _DestroySelf_c__Iterator0 : IEnumerator, IDisposable, IEnumerator<object>
+	private sealed class _DestroySelf_c__Iterator0 : IEnumerator,IDisposable,IEnumerator<object>
 	{
 		internal float time;
 
@@ -22,84 +22,65 @@ public class JumpCash : MonoBehaviour
 
 		internal int _PC;
 
-		object IEnumerator<object>.Current
-		{
-			get
-			{
-				return this._current;
-			}
-		}
+		object IEnumerator<object>.Current { get { return this._current; } }
 
-		object IEnumerator.Current
-		{
-			get
-			{
-				return this._current;
-			}
-		}
+		object IEnumerator.Current { get { return this._current; } }
 
-		public _DestroySelf_c__Iterator0()
-		{
-		}
+		public _DestroySelf_c__Iterator0() { }
 
 		public bool MoveNext()
 		{
-			uint num = (uint)this._PC;
-			this._PC = -1;
+			uint num=(uint) this._PC;
+			this._PC=-1;
 			switch (num)
 			{
-			case 0u:
-				this._timing___0 = this.time;
-				break;
-			case 1u:
-				this._timing___0 -= Time.deltaTime;
-				break;
-			default:
-				return false;
+				case 0u:
+					this._timing___0=this.time;
+					break;
+				case 1u:
+					this._timing___0-=Time.deltaTime;
+					break;
+				default:
+					return false;
 			}
-			if (this._timing___0 > 0f)
+			if(this._timing___0>0f)
 			{
-				this._current = null;
-				if (!this._disposing)
+				this._current=null;
+				if(!this._disposing)
 				{
-					this._PC = 1;
+					this._PC=1;
 				}
 				return true;
 			}
 			ObjectPool.Despawn(this._this.gameObject);
-			this._PC = -1;
+			this._PC=-1;
 			return false;
 		}
 
 		public void Dispose()
 		{
-			this._disposing = true;
-			this._PC = -1;
+			this._disposing=true;
+			this._PC       =-1;
 		}
 
-		public void Reset()
-		{
-			throw new NotSupportedException();
-		}
+		public void Reset() { throw new NotSupportedException(); }
 	}
 
-	[SerializeField]
-	private Text cashText;
+	[SerializeField] private Text cashText;
 
-	[SerializeField]
-	private Animation anim;
+	[SerializeField] private Animation anim;
 
 	public void Init(double cash)
 	{
-		GameUtilities.String.ToText(this.cashText, GameUtilities.Currencies.Convert(cash));
+		GameUtilities.String.ToText(this.cashText,GameUtilities.Currencies.Convert(cash));
 		this.DestroySelf(this.anim.clip.length);
 	}
 
 	private IEnumerator DestroySelf(float time)
 	{
-		JumpCash._DestroySelf_c__Iterator0 _DestroySelf_c__Iterator = new JumpCash._DestroySelf_c__Iterator0();
-		_DestroySelf_c__Iterator.time = time;
-		_DestroySelf_c__Iterator._this = this;
+		JumpCash._DestroySelf_c__Iterator0 _DestroySelf_c__Iterator=new JumpCash._DestroySelf_c__Iterator0();
+		_DestroySelf_c__Iterator.time =time;
+		_DestroySelf_c__Iterator._this=this;
 		return _DestroySelf_c__Iterator;
 	}
 }
