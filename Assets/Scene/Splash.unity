@@ -748,30 +748,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   products:
-  - name: diamondpack1
+  - name: extra_class_goi_1
     price: 0.99
-    appStoreID: diamondpack1
-    googlePlayID: diamondpack1
+    appStoreID: extra_class_goi_1
+    googlePlayID: extra_class_goi_1
     productType: 0
-  - name: diamondpack2
+  - name: extra_class_goi_2
+    price: 1.99
+    appStoreID: extra_class_goi_2
+    googlePlayID: extra_class_goi_2
+    productType: 0
+  - name: extra_class_goi_3
+    price: 2.99
+    appStoreID: extra_class_goi_3
+    googlePlayID: extra_class_goi_3
+    productType: 0
+  - name: extra_class_goi_4
     price: 4.99
-    appStoreID: diamondpack2
-    googlePlayID: diamondpack2
+    appStoreID: extra_class_goi_4
+    googlePlayID: extra_class_goi_4
     productType: 0
-  - name: diamondpack3
+  - name: extra_class_goi_5
     price: 9.99
-    appStoreID: diamondpack3
-    googlePlayID: diamondpack3
-    productType: 0
-  - name: diamondpack4
-    price: 24.99
-    appStoreID: diamondpack4
-    googlePlayID: diamondpack4
-    productType: 0
-  - name: diamondpack5
-    price: 49.99
-    appStoreID: diamondpack5
-    googlePlayID: diamondpack5
+    appStoreID: extra_class_goi_5
+    googlePlayID: extra_class_goi_5
     productType: 0
   - name: offlinepack
     price: 3.99

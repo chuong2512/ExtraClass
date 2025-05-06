@@ -19,8 +19,8 @@ MonoBehaviour:
     idleCashRate: 20
     minOfflineTime: 120
     maxOfflineTime: 43200
-    baseInstantCoin: 129600
-    instantCoinTime: 43200
+    baseInstantCoin: 1
+    instantCoinTime: 1
   boost:
     boostIncomeDuration: 7200
     boostIncomeEffective: 2

@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BoostManager : MonoBehaviour
+public class BoostManager : Singleton<BoostManager>
 {
 	[Serializable]
 	public struct SpriteBoost
@@ -276,10 +274,20 @@ public class BoostManager : MonoBehaviour
 
 	public void WatchAdBoost()
 	{
+		this.boostData.boostRemaining+=this.configuration.boost.boostIncomeDuration;
+		if(this.boostData.boostRemaining>this.configuration.boost.boostIncomeMaxDuration)
+		{
+			this.boostData.boostRemaining=this.configuration.boost.boostIncomeMaxDuration;
+		}
+
+		this.TotalEffectiveCompute();
+		this.AdBoostPopupDisplay();
+		Tracking.instance.Ads_Impress("reward","BoostIncome");
+
 		/*if (!QuangCao.Instance.GetRewardAvailable())
 		{*/
-		Notification.instance.Warning("No available video at the moment.");
-		Singleton<SoundManager>.Instance.Play("Notification");
+		/*Notification.instance.Warning("No available video at the moment.");
+		Singleton<SoundManager>.Instance.Play("Notification");*/
 		return;
 		/*}
 
