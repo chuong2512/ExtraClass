@@ -61,32 +61,7 @@ public class InAppPurchase : MonoBehaviour,IStoreListener
 		{
 			return;
 		}
-		ConfigurationBuilder configurationBuilder=ConfigurationBuilder.Instance(StandardPurchasingModule.Instance(),new IPurchasingModule[0]);
-		for(int i=0;i<this.products.Count;i++)
-		{
-			configurationBuilder.AddProduct(
-			this.products[i].name,
-			this.products[i].productType,
-			new IDs
-			{
-				{
-					this.products[i].googlePlayID,
-					new string[]
-					{
-						"GooglePlay"
-					}
-				},
-				{
-					this.products[i].appStoreID,
-					new string[]
-					{
-						"AppleAppStore"
-					}
-				}
-			});
-		}
-		UnityPurchasing.Initialize(this,configurationBuilder);
-		base.Invoke("LoadLocalizePrice",2f);
+
 	}
 
 	public string GetLocalizePrice(int index)
@@ -111,16 +86,8 @@ public class InAppPurchase : MonoBehaviour,IStoreListener
 
 	public void BuyProductID(string productID,Action buyDone)
 	{
-		if(!this.IsInitialized())
-		{
-			return;
-		}
-		this.purchased=buyDone;
-		Product product=InAppPurchase.storeController.products.WithID(productID);
-		if(product!=null && product.availableToPurchase)
-		{
-			InAppPurchase.storeController.InitiatePurchase(product);
-		}
+		IAPManager.OnPurchaseSuccess = buyDone;
+		IAPManager.Instance.BuyProductID(productID);
 	}
 
 	public void OnInitialized(IStoreController controller,IExtensionProvider extensions)
@@ -138,18 +105,7 @@ public class InAppPurchase : MonoBehaviour,IStoreListener
 		if(Application.platform==RuntimePlatform.IPhonePlayer || Application.platform==RuntimePlatform.OSXPlayer)
 		{
 			IAppleExtensions extension=InAppPurchase.storeExtensionProvider.GetExtension<IAppleExtensions>();
-			extension.RestoreTransactions(
-			delegate(bool result)
-			{
-				if(result && Notification.instance!=null)
-				{
-					Notification.instance.Warning("Restore Completed.");
-				}
-				if(!result && Notification.instance!=null)
-				{
-					Notification.instance.Warning("Restore Failed.");
-				}
-			});
+			
 		}
 	}
 
